@@ -103,7 +103,7 @@ curl -X POST http://localhost:8080/SmartCampus/api/v1/rooms/ \
 
 Filter Sensors by Type: 
 ```bash
-curl -X GET "http://localhost:8080/SmartCampus/api/v1/sensors?type=CO2"
+curl -X GET http://localhost:8080/SmartCampus/api/v1/sensors?type=CO2
 ```
 Delete a Room: 
 ```bash
