@@ -4,10 +4,11 @@
 The SmartCampus API is a RESTful service created for managing rooms, sensors, and sensor readings in a smart campus environment. The API is built using JAX‑RS and demonstrates:
 
 **Base URL**
-- `http://localhost:8080/SmartCampus/api/v1` - Where API starts and links to available resources.
+
+This is where API starts and links to available resources. `http://localhost:8080/SmartCampus/api/v1`
 
 ### Rooms
-It represents physical rooms on campus.The API supports listing of all rooms, retrieving a single room, creating rooms, and deleting rooms. A room cannot be deleted if it contains ACTIVE sensors.
+It represents physical rooms on campus. The API supports listing of all rooms, retrieving a single room, creating rooms, and deleting rooms. A room cannot be deleted if it contains ACTIVE sensors.
 
 - `GET /api/v1/rooms` - Get all rooms  
 - `GET /api/v1/rooms/{id}` - Get a specific room  
@@ -18,15 +19,15 @@ It represents physical rooms on campus.The API supports listing of all rooms, re
 It represents environmental sensors installed in rooms. The API supports listing of all sensors, filtering the sensors by it's type, and creating new sensors. A sensor can only be created if its `roomId` refers to an existing room.
 
 - `GET /api/v1/sensors` - Get all sensors  
-- `GET /api/v1/sensors?type={type}` — Filter sensors by type  
-- `POST /api/v1/sensors` — Create a new sensor  
+- `GET /api/v1/sensors?type={type}` - Filter sensors by type  
+- `POST /api/v1/sensors` - Create a new sensor  
   - `roomId` must refer to an existing room
 
 ### Sensor Readings (Sub‑resource)
 It represents a collection of readings for each sensor. The API exposes this as a sub‑resource at `/sensors/{id}/readings`. Adding a new reading updates the sensor’s `currentValue` and readings cannot be added if the sensor is in MAINTENANCE.
 
-- `GET /api/v1/sensors/{id}/readings` — Get readings for a sensor  
-- `POST /api/v1/sensors/{id}/readings` — Add a new reading  
+- `GET /api/v1/sensors/{id}/readings` - Get readings for a sensor  
+- `POST /api/v1/sensors/{id}/readings` - Add a new reading  
   - Updates the sensor’s `currentValue`  
   - Not allowed if sensor is in `MAINTENANCE`
  
@@ -34,20 +35,22 @@ It represents a collection of readings for each sensor. The API exposes this as 
 
 The following steps explain how to set up the environment, build the project, and run the API on Apache Tomcat using NetBeans.
 
-Prerequisites
-- **NetBeans IDE** (Java version)
-- **Apache Tomcat 9+**
+**Prerequisites**
 
-Step 1 — Install NetBeans
+- NetBeans IDE (Java version)
+- Apache Tomcat 9+
+
+**Step 1 - Install NetBeans**
 
 Download and install NetBeans from: `https://netbeans.apache.org/` 
 
-Step 2 — Download and Configure Apache Tomcat
+**Step 2 — Download and Configure Apache Tomcat**
 
 1. Download Apache Tomcat 9 from: `https://tomcat.apache.org/download-90.cgi` 
 2. Extract the downloaded ZIP file to a folder of your choice  
 
-Step 3 — Add Tomcat Server to NetBeans
+**Step 3 — Add Tomcat Server to NetBeans**
+
 1. Open **NetBeans**.
 2. Go to the **Services** tab.
 3. Right‑click **Servers** → **Add Server**.
@@ -59,7 +62,7 @@ Step 3 — Add Tomcat Server to NetBeans
 
 If everything is correct, you will see a **green triangle icon** next to the Tomcat 
 
-Step 4 — Create the Project
+**Step 4 — Create the Project**
 
 1. In NetBeans, click **File → New Project**.
 2. Select **Java with Maven → Web Application**.
@@ -69,34 +72,43 @@ Step 4 — Create the Project
 6. Select **Java EE 8 Web** as the framework.
 7. Click **Finish**.
 
-Step 5 — Build the Project
+**Step 5 — Build the Project**
 
 In NetBeans, Right‑click the project > **Clean and Build**
 
-Step 6 — Run the Application
+**Step 6 — Run the Application**
 
 In NetBeans, Right‑click the project > Run  
 
-Step 7 — Verify the API Is Running
+**Step 7 — Verify the API Is Running**
 
 Open a browser or use curl: `http://localhost:8080/SmartCampus/api/v1`
 
 ## Sample curl commands to demonstrate successful interactions with different parts of the API
 
-GET API Discovery Info:  `curl -X GET http://localhost:8080/SmartCampus/api/v1`
+GET API Discovery Info:  
+```bash
+curl -X GET http://localhost:8080/SmartCampus/api/v1
+```
+GET All Rooms: 
+```bash
+curl -X GET http://localhost:8080/SmartCampus/api/v1/rooms
+```
+Create a New Room: 
+```bash
+curl -X POST http://localhost:8080/SmartCampus/api/v1/rooms/ \
+  -H "Content-Type: application/json" \
+  -d '{"id":"R10","name":"Test Room","capacity":40,"sensorIds":[]}'
+```
 
-GET All Rooms: `curl -X GET http://localhost:8080/SmartCampus/api/v1/rooms`
-
-Create a New Room: `curl -X POST http://localhost:8080/SmartCampus/api/v1/rooms`/
-
-                     -H "Content-Type: application/json" \
-                     
-                     -d '{"id":"R10","name":"Test Room","capacity":40,"sensorIds":[]}'
-                     
-Filter Sensors by Type: `curl -X GET "http://localhost:8080/SmartCampus/api/v1/sensors?type=CO2"`
-
-Delete a Room: `curl -X DELETE http://localhost:8080/SmartCampus/api/v1/rooms/R2` 
-
+Filter Sensors by Type: 
+```bash
+curl -X GET "http://localhost:8080/SmartCampus/api/v1/sensors?type=CO2"
+```
+Delete a Room: 
+```bash
+curl -X DELETE http://localhost:8080/SmartCampus/api/v1/rooms/R2
+```
 ## Report
 
 Below are the answers to the quesstions from the coursework brief. 
